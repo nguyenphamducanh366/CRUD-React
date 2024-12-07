@@ -19,7 +19,7 @@ const PrivateRoute=({children,user})=>{
 }
 return(
 <Routes>
- <Route path="/" element={
+ <Route path="/products" element={
   <PrivateRoute user={user}><List/></PrivateRoute>
  }></Route>
   <Route path="/products/add" element={
