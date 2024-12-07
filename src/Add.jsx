@@ -1,41 +1,36 @@
 import React from 'react';
 import { Button, Form, Input, InputNumber, message, Radio, Select, Layout, Typography } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { useStore } from './data/store.js';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
 
 const Add = () => {
     const navigate = useNavigate();
-    const [text, noti] = message.useMessage();
+    const { addProduct } = useStore();
+    const [messageApi, contextHolder] = message.useMessage();
 
-    // Mutation for adding a new product
-    const { mutate } = useMutation({
-        mutationFn: async (data) => {
-            await axios.post(`http://localhost:3000/products`, data);
-        },
-        onSuccess() {
-            message.success('Product added successfully');
-            navigate('/products');
-        }
-    });
+    const onFinish = (values) => {
+        addProduct(values);
+        messageApi.success('Product added successfully');
+        navigate('/CRUD-React');
+    };
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
+            {contextHolder}
             <Header style={{ background: '#001529', color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Title level={2} style={{ color: '#fff', margin: 0 }}>Add New Product</Title>
             </Header>
             <Content style={{ padding: '20px' }}>
-                {noti}
                 <Form
                     name="add-product"
                     labelCol={{ span: 8 }}
                     wrapperCol={{ span: 16 }}
                     style={{ maxWidth: 600 }}
-                    onFinish={(data) => mutate(data)}
+                    onFinish={onFinish}
                 >
                     <Form.Item
                         label="Name"
@@ -120,3 +115,4 @@ const Add = () => {
 }
 
 export default Add;
+

@@ -1,40 +1,20 @@
 import React from 'react';
-import { message, Image, Table, Space, Button, Popconfirm, Skeleton, Layout, Typography } from 'antd';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { message, Image, Table, Space, Button, Popconfirm, Layout, Typography } from 'antd';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { useStore } from './data/store.js';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
 
 const List = () => {
-    const queryClient = useQueryClient();
-    const [text, noti] = message.useMessage();
+    const { products, deleteProduct } = useStore();
+    const [messageApi, contextHolder] = message.useMessage();
 
-    // Fetch products data
-    const { data, isLoading } = useQuery({
-        queryKey: ['products'],
-        queryFn: async () => {
-            const { data } = await axios.get(`http://localhost:3000/products`);
-            return data.map((item) => ({
-                key: item.id,
-                ...item
-            }));
-        }
-    });
+    const handleDelete = (id) => {
+        deleteProduct(id);
+        messageApi.success('Product deleted successfully');
+    };
 
-    // Delete product mutation
-    const { mutate } = useMutation({
-        mutationFn: async (id) => {
-            await axios.delete(`http://localhost:3000/products/${id}`);
-        },
-        onSuccess() {
-            message.success('Product deleted successfully');
-            queryClient.invalidateQueries({ queryKey: ['products'] });
-        }
-    });
-
-    // Define table columns
     const columns = [
         {
             title: 'Image',
@@ -75,18 +55,18 @@ const List = () => {
         },
         {
             key: 'action',
-            render: (_, data) => (
+            render: (_, record) => (
                 <Space size='middle'>
                     <Popconfirm
                         title="Delete the product"
                         description="Are you sure you want to delete this product?"
-                        onConfirm={() => mutate(data.id)}
+                        onConfirm={() => handleDelete(record.id)}
                         okText="Yes"
                         cancelText="No"
                     >
                         <Button danger>Delete</Button>
                     </Popconfirm>
-                    <Link to={`/products/${data.id}/edit`}>
+                    <Link to={`/products/${record.id}/edit`}>
                         <Button type="primary">Update</Button>
                     </Link>
                 </Space>
@@ -96,20 +76,19 @@ const List = () => {
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
+            {contextHolder}
             <Header style={{ background: '#001529', color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Title level={2} style={{ color: '#fff', margin: 0 }}>Admin Product List</Title>
             </Header>
             <Content style={{ padding: '20px' }}>
-                {noti}
-                <Skeleton loading={isLoading}>
-                    <Link to={`/products/add`}>
-                        <Button type="primary" style={{ marginBottom: '20px' }}>Add Product</Button>
-                    </Link>
-                    <Table dataSource={data} columns={columns} pagination={{ pageSize: 10 }} />
-                </Skeleton>
+                <Link to={`/products/add`}>
+                    <Button type="primary" style={{ marginBottom: '20px' }}>Add Product</Button>
+                </Link>
+                <Table dataSource={products} columns={columns} rowKey="id" pagination={{ pageSize: 10 }} />
             </Content>
         </Layout>
     );
 }
 
 export default List;
+

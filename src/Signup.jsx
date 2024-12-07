@@ -1,40 +1,39 @@
 import React from 'react';
 import { Button, Form, Input, message, Layout, Typography } from "antd";
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { useStore } from './data/store.js';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
 
 const Signup = () => {
     const navigate = useNavigate();
-    const [text, noti] = message.useMessage();
+    const { addUser } = useStore();
+    const [messageApi, contextHolder] = message.useMessage();
 
-    // Mutation for signing up a new user
-    const { mutate } = useMutation({
-        mutationFn: async (data) => {
-            await axios.post(`http://localhost:3000/signup`, data);
-        },
-        onSuccess() {
-            message.success('Signup successful!');
-            navigate('/signin');
-        }
-    });
+    const onFinish = (values) => {
+        addUser({
+            username: values.username,
+            email: values.email,
+            password: values.password
+        });
+        messageApi.success('Signup successful!');
+        navigate('/signin');
+    };
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
+            {contextHolder}
             <Header style={{ background: '#001529', color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Title level={2} style={{ color: '#fff', margin: 0 }}>Sign Up</Title>
             </Header>
             <Content style={{ padding: '20px' }}>
-                {noti}
                 <Form
                     name="signup"
                     labelCol={{ span: 8 }}
                     wrapperCol={{ span: 16 }}
                     style={{ maxWidth: 600 }}
-                    onFinish={(data) => mutate(data)}
+                    onFinish={onFinish}
                 >
                     <Form.Item
                         label="Username"
@@ -96,3 +95,4 @@ const Signup = () => {
 }
 
 export default Signup;
+
