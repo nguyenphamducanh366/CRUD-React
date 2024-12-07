@@ -1,30 +1,44 @@
 {
   "products": [
     {
-      "name": "Product 1",
-      "imageUrl": "https://picsum.photos/id/12/200/300",
-      "price": 222,
-      "quantity": 222,
-      "description": "adwdawdawd",
-      "inStock": true,
-      "category": "Category 1 ",
-      "id": 2
-    }
-  ],
-  "users": [
-    {
-      "email": "admin@gmail.com",
-      "password": "$2a$10$uS1Jm3fY.rvOjT3jfUv6mes8wxmF4KW708f2M6gBY70BDQMlpZXkS",
-      "username": "admin",
-      "confirmPassword": "admin@gmail.com",
-      "id": 1
+      "id": 7,
+      "name": "Product 7",
+      "price": 12.99,
+      "quantity":13,
+      "imageUrl": "https://picsum.photos/id/16/300/300",
+      "description": "This is product 7",
+      "inStock":true,
+      "category":"Category 1"
     },
     {
-      "email": "user1@gmail.com",
-      "password": "$2a$10$nzgCyK/ZYDIqVAHpIdIvxO0sPTWff9Dhsr9PkuJvgJ0Exd85M0nEe",
-      "username": "user1",
-      "ConfirmPassword": "user1@gmail.com",
-      "id": 2
+      "id": 8,
+      "name": "Product 8",
+      "price": 17.99,
+      "quantity":9,
+      "imageUrl": "https://picsum.photos/id/17/300/300",
+      "description": "This is product 8",
+      "inStock":true,
+      "category":"Category 3"
+    },
+    {
+      "id": 9,
+      "name": "Product 9",
+      "price": 6.99,
+      "quantity":9,
+      "imageUrl": "https://picsum.photos/id/18/300/300",
+      "description": "This is product 9",
+      "inStock":true,
+      "category":"Category 1"
+    },
+    {
+      "id": 10,
+      "name": "Product 10",
+      "price": 11.99,
+      "quantity":10,
+      "imageUrl": "https://picsum.photos/id/19/300/300",
+      "description": "This is product 10",
+      "inStock":true,
+      "category":"Category 2"
     }
   ]
 }
