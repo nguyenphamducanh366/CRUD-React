@@ -1,0 +1,30 @@
+{
+  "products": [
+    {
+      "name": "Product 1",
+      "imageUrl": "https://picsum.photos/id/12/200/300",
+      "price": 222,
+      "quantity": 222,
+      "description": "adwdawdawd",
+      "inStock": true,
+      "category": "Category 1 ",
+      "id": 2
+    }
+  ],
+  "users": [
+    {
+      "email": "admin@gmail.com",
+      "password": "$2a$10$uS1Jm3fY.rvOjT3jfUv6mes8wxmF4KW708f2M6gBY70BDQMlpZXkS",
+      "username": "admin",
+      "confirmPassword": "admin@gmail.com",
+      "id": 1
+    },
+    {
+      "email": "user1@gmail.com",
+      "password": "$2a$10$nzgCyK/ZYDIqVAHpIdIvxO0sPTWff9Dhsr9PkuJvgJ0Exd85M0nEe",
+      "username": "user1",
+      "ConfirmPassword": "user1@gmail.com",
+      "id": 2
+    }
+  ]
+}
